@@ -66,17 +66,14 @@ async def agent(
         logger.debug(f"Request: {request}")
         logger.info("Handling TwiML agent request")
 
-        host = request.headers.get('host')
-        scheme = 'https' if 'https' in str(request.url) else 'http'
-        
         # Play your greeting audio before connecting to agent
-        greeting_url = f"{scheme}://{host}/static/twiml_greeting.mp3"
+        greeting_url = f"https://{settings.HOST}/static/twiml_greeting.mp3"
         
         twiml = f"""<?xml version="1.0" encoding="UTF-8"?>
             <Response>
                 <Play>{greeting_url}</Play>
                 <Connect>
-                    <Stream url="wss://{host}/ws"></Stream>
+                    <Stream url="wss://{settings.HOST}/ws"></Stream>
                 </Connect>
                 <Say>The bot connection has been terminated.</Say>
             </Response>"""
@@ -139,9 +136,7 @@ async def initiate_call(
         )
         
         # Use the request host to build webhook URL
-        host = req.headers.get('host')
-        scheme = 'https' if 'https' in str(req.url) else 'http'
-        webhook_url = f"{scheme}://{host}/agent"
+        webhook_url = f"https://{settings.HOST}/agent"
         
         # Create the outbound call
         call = twilio_client.calls.create(

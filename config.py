@@ -12,5 +12,6 @@ class Settings:
     DEEPGRAM_API_KEY: str = os.getenv("DEEPGRAM_API_KEY")
     ELEVENLABS_API_KEY: str = os.getenv("ELEVENLABS_API_KEY")
     CARTESIA_API_KEY: str = os.getenv("CARTESIA_API_KEY")
+    HOST: str = os.getenv("HOST")
 
 settings = Settings()
